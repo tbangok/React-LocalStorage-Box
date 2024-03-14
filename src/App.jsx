@@ -1,27 +1,17 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { ColorBox } from './components/colorBox'
+import { useLocalStorage } from './components/useLocalStorage' 
 
 const randomNumber = () => {
   return Math.round(Math.random() * 100)
 }
 
 function App() {
-  const [monBox, setMonBoxes] = useState(() => {
-    const storedMonBoxes = JSON.parse(localStorage.getItem('monBoxes'))
-    return storedMonBoxes ? storedMonBoxes : []
-  })
+  const [monBox, setMonBoxes] = useLocalStorage('monBoxes', []);
+  const [tueBox, setTueBoxes] = useLocalStorage('tueBoxes', []);
 
-  const [tueBox, setTueBoxes] = useState(() => {
-    const storedTueBoxes = JSON.parse(localStorage.getItem('tueBoxes'))
-    return storedTueBoxes ? storedTueBoxes : []
-  }) 
-
-  useEffect(() => {
-    localStorage.setItem('monBoxes', JSON.stringify(monBox))
-    localStorage.setItem('tueBoxes', JSON.stringify(tueBox))
-  }, [monBox, tueBox])
-
+ 
 
   function handleMonday() {
     const name = randomNumber()
